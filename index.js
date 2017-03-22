@@ -8,7 +8,6 @@ var fs = require('fs');
 var async = require('async');
 var superagent = require('superagent');
 var request = require('request');
-var result = [];
 var http = require('http');
 var https = require('https');
 var path = require('path');
@@ -23,12 +22,10 @@ request(origin + '67' + '/', function (error, response, body) {
     if (folderName.indexOf('HTM') !== -1) {
       request(origin + '67' + '/' + data.trim(), function (error, response, body) {
         var $ = cheerio.load(body);
-        var list = [];
         $('img').each(function (index, img) {
           var srcEle = img.attribs.src;
           if (srcEle.indexOf('http') === 0) {
             list.push(srcEle);
-            console.log(srcEle)
             downloadImg('~/m1911/WebstormProjects/', srcEle);
           }
         });
